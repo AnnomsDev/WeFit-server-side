@@ -42,8 +42,8 @@ async function run() {
         // GET API - service by id
         app.get('/services/:id', async (req, res) => {
             const id = req.params.id
-            const cursor = serviceCollec.find({ _id: ObjectId(id) })
-            const service = await cursor.toArray()
+            const service = await serviceCollec.findOne({ _id: ObjectId(id) })
+            console.log(service)
             res.json(service)
         })
 

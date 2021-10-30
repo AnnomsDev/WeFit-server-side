@@ -87,6 +87,17 @@ async function run() {
             res.json(result)
         })
 
+        // PUT API - update order status
+        app.put('/change-status', async (req, res) => {
+            const id = req.body.id;
+            console.log('Got and status update request for id: ', id)
+            const update = { $set: { status: 'confirmed' } }
+            const result = await ordersCollection.updateOne({ _id: ObjectId(id) }, update)
+            res.json(result)
+        })
+
+
+
 
 
 

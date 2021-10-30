@@ -61,6 +61,20 @@ async function run() {
 
         })
 
+        // GET API - my orders
+        app.get('/my-orders/:email', async (req, res) => {
+            const email = req.params.email;
+            console.log(email)
+
+            const myOrders = await ordersCollection.find({ email: email }).toArray()
+            console.log(myOrders)
+            res.json(myOrders)
+
+
+        })
+
+
+
 
 
 

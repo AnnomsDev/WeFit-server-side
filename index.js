@@ -29,6 +29,7 @@ async function run() {
 
         const database = client.db('adventure-lover')
         const serviceCollec = database.collection('services')
+        const ordersCollection = database.collection("orders")
 
 
         // GET API - all services
@@ -45,6 +46,19 @@ async function run() {
             const service = await serviceCollec.findOne({ _id: ObjectId(id) })
             console.log(service)
             res.json(service)
+        })
+
+
+        // POST API - place order
+        app.post('/place-order', async (req, res) => {
+            console.log('post hit')
+            const order = req.body
+
+            const result = await ordersCollection.insertOne(order)
+            console.log("A new order is placed , inserted id is: ", result.insertedId)
+
+            res.json(result)
+
         })
 
 

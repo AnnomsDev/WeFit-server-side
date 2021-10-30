@@ -61,17 +61,33 @@ async function run() {
 
         })
 
-        // GET API - my orders
+        // GET API - Get orders by email
         app.get('/my-orders/:email', async (req, res) => {
             const email = req.params.email;
-            console.log(email)
-
             const myOrders = await ordersCollection.find({ email: email }).toArray()
             console.log(myOrders)
             res.json(myOrders)
 
 
         })
+
+        // GET API - all orders
+        app.get('/all-orders', async (req, res) => {
+            const allOrders = await ordersCollection.find({}).toArray()
+            console.log(allOrders)
+            res.json(allOrders)
+
+        })
+
+        // GET API - Delete order by _id
+        app.get('/delete/:id', async (req, res) => {
+            const id = req.params.id
+            const result = await ordersCollection.deleteOne({ _id: ObjectId(id) })
+            console.log("1 item is deleted")
+            res.json(result)
+        })
+
+
 
 
 

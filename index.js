@@ -79,13 +79,16 @@ async function run() {
 
         })
 
+
         // GET API - Delete order by _id
-        app.get('/delete/:id', async (req, res) => {
+        app.delete('/delete/:id', async (req, res) => {
             const id = req.params.id
             const result = await ordersCollection.deleteOne({ _id: ObjectId(id) })
             console.log("1 item is deleted")
             res.json(result)
         })
+
+
 
         // PUT API - update order status
         app.put('/change-status', async (req, res) => {

@@ -28,13 +28,13 @@ async function run() {
         console.log('connected')
 
         const database = client.db('adventure-lover')
-        const serviceCollec = database.collection('services')
+        const serviceCollection = database.collection('services')
         const ordersCollection = database.collection("orders")
 
 
         // GET API - all services
         app.get('/services', async (req, res) => {
-            const cursor = serviceCollec.find({})
+            const cursor = serviceCollection.find({})
             const services = await cursor.toArray()
             res.json(services);
         })
@@ -43,7 +43,7 @@ async function run() {
         // GET API - service by id
         app.get('/services/:id', async (req, res) => {
             const id = req.params.id
-            const service = await serviceCollec.findOne({ _id: ObjectId(id) })
+            const service = await serviceCollection.findOne({ _id: ObjectId(id) })
             console.log(service)
             res.json(service)
         })
@@ -96,6 +96,15 @@ async function run() {
             console.log('Got and status update request for id: ', id)
             const update = { $set: { status: 'confirmed' } }
             const result = await ordersCollection.updateOne({ _id: ObjectId(id) }, update)
+            res.json(result)
+        })
+
+
+        // POST API - add new service
+        app.post('/add-service', async (req, res) => {
+            const newService = req.body
+            console.log('got an add service request')
+            const result = await serviceCollection.insertOne(newService)
             res.json(result)
         })
 

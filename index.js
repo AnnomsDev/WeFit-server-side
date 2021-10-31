@@ -44,7 +44,7 @@ async function run() {
         app.get('/services/:id', async (req, res) => {
             const id = req.params.id
             const service = await serviceCollection.findOne({ _id: ObjectId(id) })
-            console.log(service)
+            console.log("Hit a get request for service by id")
             res.json(service)
         })
 
@@ -53,28 +53,25 @@ async function run() {
         app.post('/place-order', async (req, res) => {
             console.log('post hit')
             const order = req.body
-
             const result = await ordersCollection.insertOne(order)
             console.log("A new order is placed , inserted id is: ", result.insertedId)
-
             res.json(result)
-
         })
+
 
         // GET API - Get orders by email
         app.get('/my-orders/:email', async (req, res) => {
             const email = req.params.email;
             const myOrders = await ordersCollection.find({ email: email }).toArray()
-            console.log(myOrders)
+            console.log('Hit a Get request for orders by email')
             res.json(myOrders)
-
-
         })
+
 
         // GET API - all orders
         app.get('/all-orders', async (req, res) => {
+            console.log('Hit a Get requst for all order')
             const allOrders = await ordersCollection.find({}).toArray()
-            console.log(allOrders)
             res.json(allOrders)
 
         })
@@ -87,7 +84,6 @@ async function run() {
             console.log("1 item is deleted")
             res.json(result)
         })
-
 
 
         // PUT API - update order status
@@ -107,16 +103,6 @@ async function run() {
             const result = await serviceCollection.insertOne(newService)
             res.json(result)
         })
-
-
-
-
-
-
-
-
-
-
 
 
     }
